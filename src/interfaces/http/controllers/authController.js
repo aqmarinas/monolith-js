@@ -1,3 +1,4 @@
+import { User } from "../../../domain/entities/User.js";
 import { AuthService } from "../../../domain/services/authService.js";
 
 const authService = new AuthService();
@@ -11,9 +12,12 @@ export async function showLogin(req, res) {
 }
 
 export async function register(req, res) {
+  const { name, email, password } = req.body;
+
   try {
-    const { name, email, password } = req.body;
-    await authService.register({ name, email, password });
+    const user = new User(null, name, email, password);
+    await authService.register(user);
+
     res.render("auth/login");
   } catch (error) {
     req.flash("error", error.message);
@@ -22,15 +26,15 @@ export async function register(req, res) {
 }
 
 export async function login(req, res) {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-    const { token } = await authService.login({ email, password });
+    const user = new User(null, null, email, password);
+    const { token } = await authService.login(user);
 
     res.cookie("token", token, {
       httpOnly: true,
       maxAge: 1800000,
     });
-    console.log("Redirecting to /products");
 
     res.redirect("/products");
   } catch (error) {

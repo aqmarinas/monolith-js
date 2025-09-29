@@ -7,41 +7,41 @@ export class AuthService {
     this.authRepository = new AuthRepository();
   }
 
-  async register({ name, email, password }) {
-    const existingUser = await this.authRepository.findByEmail(email);
+  async register(user) {
+    const existingUser = await this.authRepository.findByEmail(user.email);
 
     if (existingUser) {
       throw new Error("Email already registered");
     }
 
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(user.password, 10);
 
-    const user = {
-      name,
-      email,
+    const userData = {
+      name: user.name,
+      email: user.email,
       passwordHash,
     };
 
-    const createdUser = await this.authRepository.createUser(user);
+    const createdUser = await this.authRepository.createUser(userData);
 
     delete createdUser.password;
     return createdUser;
   }
 
-  async login({ email, password }) {
-    const user = await this.authRepository.findByEmail(email);
+  async login(user) {
+    const userData = await this.authRepository.findByEmail(user.email);
 
-    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+    if (!userData || !(await bcrypt.compare(user.password, userData.password))) {
       throw new Error("Wrong credentials");
     }
 
-    const payload = { id: user.id, email: user.email };
+    const payload = { id: userData.id, email: userData.email };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, {
       expiresIn: "30m",
     });
 
-    delete user.password;
-    return { user, token };
+    delete userData.password;
+    return { userData, token };
   }
 }
