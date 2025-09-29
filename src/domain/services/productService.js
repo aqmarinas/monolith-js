@@ -15,12 +15,12 @@ export class ProductService {
     return this.productRepository.findById(id);
   }
 
-  async createProduct(name, description) {
-    return this.productRepository.create({ name, description });
+  async createProduct(product) {
+    return this.productRepository.create(product);
   }
 
-  async updateProduct(id, name, description) {
-    return this.productRepository.update({ id, name, description });
+  async updateProduct(product) {
+    return this.productRepository.update(product);
   }
 
   async deleteProduct(id) {
