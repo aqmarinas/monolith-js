@@ -4,16 +4,16 @@ import { ProductService } from "../../../domain/services/productService.js";
 const productService = new ProductService();
 
 export async function showCreateForm(req, res) {
-  res.render("products/create");
+  return res.render("products/create");
 }
 
 export async function showEditForm(req, res) {
   const product = await productService.getProductById(req.params.id);
   if (!product) {
     req.flash("error", "Product not found");
-    res.redirect("/products");
+    return res.redirect("/products");
   }
-  res.render("products/edit", { product });
+  return res.render("products/edit", { product });
 }
 
 export async function getProducts(req, res) {
@@ -25,16 +25,16 @@ export async function getProducts(req, res) {
 
   const totalPages = Math.ceil(total / limit);
 
-  res.render("products/index", { products, page, totalPages });
+  return res.render("products/index", { products, page, totalPages });
 }
 
 export async function getProductById(req, res) {
   const product = await productService.getProductById(req.params.id);
   if (!product) {
     req.flash("error", "Product not found");
-    res.redirect("/products");
+    return res.redirect("/products");
   }
-  res.render("products/detail", { product });
+  return res.render("products/detail", { product });
 }
 
 export async function createProduct(req, res) {
@@ -44,27 +44,30 @@ export async function createProduct(req, res) {
     await productService.createProduct(product);
 
     req.flash("success", "Produk berhasil ditambahkan");
-    res.redirect("/products");
+    return res.redirect("/products");
   } catch (error) {
     console.log(error);
     req.flash("error", "Gagal menambahkan produk");
-    res.redirect("/products/create");
+    return res.redirect("/products/create");
   }
 }
 
 export async function updateProduct(req, res) {
+  if (!req.params.id) {
+    req.flash("error", "ID produk tidak valid");
+    return res.redirect("/products");
+  }
   const { name, description } = req.body;
-
   try {
     const product = new Product(req.params.id, name, description);
     await productService.updateProduct(product);
 
     req.flash("success", "Produk berhasil diperbarui");
-    res.redirect(`/products/${req.params.id}`);
+    return res.redirect(`/products/${req.params.id}`);
   } catch (error) {
     console.log(error);
     req.flash("error", "Gagal update produk");
-    res.redirect("/products/create");
+    return res.redirect("/products/create");
   }
 }
 
@@ -81,5 +84,5 @@ export async function deleteProduct(req, res) {
     console.error(error);
     req.flash("error", "Gagal menghapus produk");
   }
-  res.redirect("/products");
+  return res.redirect("/products");
 }

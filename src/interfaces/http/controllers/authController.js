@@ -4,11 +4,11 @@ import { AuthService } from "../../../domain/services/authService.js";
 const authService = new AuthService();
 
 export async function showRegister(req, res) {
-  res.render("auth/register");
+  return res.render("auth/register");
 }
 
 export async function showLogin(req, res) {
-  res.render("auth/login");
+  return res.render("auth/login");
 }
 
 export async function register(req, res) {
@@ -18,10 +18,10 @@ export async function register(req, res) {
     const user = new User(null, name, email, password);
     await authService.register(user);
 
-    res.render("auth/login");
+    return res.redirect("auth/login");
   } catch (error) {
     req.flash("error", error.message);
-    res.redirect("/register");
+    return res.redirect("/register");
   }
 }
 
@@ -36,11 +36,11 @@ export async function login(req, res) {
       maxAge: 1800000,
     });
 
-    res.redirect("/products");
+    return res.redirect("/products");
   } catch (error) {
     console.error("Login error:", error);
 
     req.flash("error", error.message);
-    res.redirect("/login");
+    return res.redirect("/login");
   }
 }
