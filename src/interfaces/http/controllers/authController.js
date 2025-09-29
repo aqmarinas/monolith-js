@@ -18,7 +18,7 @@ export async function register(req, res) {
     const user = new User(null, name, email, password);
     await authService.register(user);
 
-    return res.redirect("auth/login");
+    return res.redirect("/login");
   } catch (error) {
     req.flash("error", error.message);
     return res.redirect("/register");
