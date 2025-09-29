@@ -1,0 +1,10 @@
+<div class="border p-4 rounded-lg border-gray-300 shadow-sm hover:bg-gray-50 space-y-2 flex flex-col">
+  <h3 class="font-bold text-2xl"><%= title %></h3>
+  <p class="break-words line-clamp-3 flex-grow"><%= description %></p>
+
+  <%- include('../atoms/link.ejs', { 
+      href: link, 
+      linkText: linkText 
+    }) 
+  %>
+</div>

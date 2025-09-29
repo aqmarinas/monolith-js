@@ -1,0 +1,9 @@
+<%- include("../../components/templates/layout.ejs", { 
+  title: product.name, 
+  content: include("../../components/partials/products/detailBody.ejs", { 
+    title: product.name, 
+    description: product.description, 
+    id: product.id}) 
+   }) 
+  %>
+

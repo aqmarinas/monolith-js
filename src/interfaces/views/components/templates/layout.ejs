@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link
+      rel="stylesheet"
+      href="https://rsms.me/inter/inter.css"
+    />
+    <style type="text/tailwindcss">
+      @theme {
+        --font-sans: InterVariable, sans-serif;
+        --font-sans--font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+      }
+    </style>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <%- include("../organisms/navbar") %>
+
+    <main class="flex-grow py-8 px-4 md:px-8 lg:px-16"><%- content %></main>
+
+    <%- include("../organisms/footer") %>
+  </body>
+</html>

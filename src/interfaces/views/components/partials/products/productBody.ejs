@@ -1,0 +1,47 @@
+<div class="space-y-4">
+  <h1 class="text-3xl font-bold">Product</h1>
+
+  <%- include('../../atoms/flash.ejs') %>
+
+    <%- include('../../atoms/link.ejs', { 
+        link: "/products/create" , 
+        linkText: "Add Product" 
+      }) 
+    %>
+
+   <% if (products.length > 0) { %>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 py-4">
+      <% products.forEach(product => { %> 
+        <%- include("../../molecules/card.ejs", { 
+            title: product.name, 
+            description: product.description, 
+            link: "/products/" + product.id, 
+            linkText: "→ Detail" 
+          }) %> 
+      <% }) %>
+    </div>
+  <% } else { %>
+    <p class="text-center text-gray-500">No products available.</p>
+  <% } %>
+
+  <div class="flex justify-between text-sm">
+    <span class="text-gray-500">
+      Page <%= page %> of <%= totalPages %>
+    </span>
+
+    <% if (page > 1) { %>
+      <%- include('../../atoms/link.ejs', { 
+        link: "?page=" + (page - 1), 
+        linkText: "Previous" 
+      }) %>
+    <% }  %>
+
+
+    <% if (page < totalPages) { %>
+      <%- include('../../atoms/link.ejs', { 
+        link: "?page=" + (page + 1), 
+        linkText: "Next" 
+      }) %>
+    <% } %>
+    </div>
+</div>

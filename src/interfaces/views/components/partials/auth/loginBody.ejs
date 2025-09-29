@@ -1,0 +1,45 @@
+<div class="w-full md:max-w-2xl mx-auto space-y-4">
+  <h2 class="text-2xl font-bold">Login</h2>
+
+  <%- include('../../atoms/flash.ejs', { error }) %>
+
+  <form
+    action="/login"
+    method="post"
+    class="space-y-4"
+  >
+    <%- include('../../atoms/input', { 
+        id: 'email', 
+        type: 'email', 
+        name: 'email', 
+        label: 'Email', 
+        placeholder: 'Your email', 
+        required: true, 
+        value:"" 
+      }) 
+    %> 
+    
+    <%- include('../../atoms/input', { 
+        id: 'password', 
+        type: 'password', 
+        name: 'password', 
+        label: 'Password', 
+        placeholder: '*******', 
+        required: true, 
+        value:"" 
+      }) 
+    %> 
+    
+    <%- include("../../atoms/button.ejs", { 
+        type: "submit", 
+        text: "Login", 
+        variant: "primary"
+      }) 
+    %>
+
+    <p class="text-sm">
+      Don't have an account?
+        <%- include('../../atoms/link.ejs', { link: "/register", linkText: "Register" }) %>
+    </p>
+  </form>
+</div>

@@ -1,0 +1,40 @@
+<div class="w-full md:max-w-2xl space-y-4">
+  <h2 class="text-2xl font-bold">Create Product</h2>
+
+  <%- include("../../../components/atoms/flash.ejs", { error }) %>
+
+  <form
+    action="/products/"
+    method="post"
+    class="space-y-4"
+  >
+    <%- include('../../atoms/input', { 
+        id: 'name', 
+        type: 'text', 
+        name: 'name', 
+        label: 'Name', 
+        placeholder: 'Product Name', 
+        required: true,
+        value:""  
+      }) 
+    %> 
+    
+    <%- include('../../atoms/input', { 
+        id: 'description', 
+        type: 'text', 
+        name: 'description', 
+        label:'Description', 
+        placeholder:"Product Description", 
+        required: true,
+        value:""  
+      }) 
+    %> 
+    
+    <%- include("../../atoms/button.ejs", { 
+        type: "submit", 
+        text: "Add", 
+        variant: "primary"
+      }) 
+    %>
+  </form>
+</div>

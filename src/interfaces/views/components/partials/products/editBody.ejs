@@ -1,0 +1,50 @@
+<div class="w-full md:max-w-2xl space-y-4">
+
+  <div>
+    <%- include('../../atoms/link.ejs', { 
+        link: "/products/" + product.id , 
+        linkText: "← Detail" 
+      }) 
+    %>
+  </div>
+
+  <h2 class="text-2xl font-bold">Update Product</h2>
+
+  <%- include("../../atoms/flash.ejs", { error }) %>
+
+  <form
+    action="/products/<%= product.id %>/update"
+    method="post"
+    class="space-y-4"
+  >
+    <%- include('../../atoms/input', { 
+        id: 'name', 
+        type: 'text', 
+        name: 'name', 
+        label: 'Name', 
+        placeholder: 
+        'Product Name', 
+        required: true, 
+        value: product.name 
+      }) 
+    %> 
+    
+    <%- include('../../atoms/input', { 
+        id: 'description', 
+        type: 'text', 
+        name: 'description', 
+        label: 'Description', 
+        placeholder:"Product Description", 
+        required: true, 
+        value: product.description 
+      }) 
+    %> 
+    
+    <%- include("../../atoms/button.ejs", { 
+        type: "submit", 
+        text: "Update", 
+        variant: "primary"
+      }) 
+    %>
+  </form>
+</div>

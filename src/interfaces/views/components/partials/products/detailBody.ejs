@@ -1,0 +1,38 @@
+<div class="space-y-4">
+  <div>
+      <%- include('../../atoms/link.ejs', { 
+        link: "/products/" , 
+        linkText: "← Products" 
+      }) 
+    %>
+  </div>
+
+  <h2 class="font-bold text-3xl"><%= title %></h2>
+
+  <%- include('../../atoms/flash.ejs') %>
+
+  <div>
+    <h4 class="text-xl font-semibold">Description</h4>
+    <p class="break-words"><%= description %></p>
+  </div>
+
+  <div class="flex space-x-2">
+    <%- include('../../atoms/link.ejs', { 
+        link: "/products/" + id + "/edit" , 
+        linkText: "Edit" 
+      }) 
+    %>
+
+    <form
+      action="/products/<%= id %>/delete"
+      method="POST"
+    >
+      <%- include("../../../components/atoms/button.ejs", { 
+          type: "submit", 
+          text: "Delete", 
+          variant: "delete"
+        }) 
+      %>
+    </form>
+  </div>
+</div>
